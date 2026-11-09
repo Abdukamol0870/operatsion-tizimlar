@@ -1,69 +1,29 @@
 <!DOCTYPE html>
-<html lang="uz">
-<head>
-<meta charset="UTF-8">
-<title>16-variant CPU Scheduling</title>
+<html lang="uz"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CPU Scheduling — 16-variant</title>
 <style>
-body{font-family:Arial,sans-serif;max-width:900px;margin:25px auto;padding:15px;line-height:1.5;color:#222}
-h1,h2{color:#183b63}table{border-collapse:collapse;width:100%;margin:12px 0}
-th,td{border:1px solid #bbb;padding:8px;text-align:center}th{background:#eee}
-.gantt{display:flex;gap:3px;margin:10px 0;overflow-x:auto}
-.gantt div{padding:10px 5px;text-align:center;min-width:35px;flex:var(--w);background:#e5eef9;border:1px solid #aac}
-.note{background:#f4f7fb;padding:10px;border-left:4px solid #4778c7}
-</style>
-</head>
-<body>
-<h1>16-variant — CPU Scheduling</h1>
-<p>1-topshiriq: Priority Scheduling (Non-Preemptive)<br>2-topshiriq: Round Robin</p>
-
-<h2>Berilgan jarayonlar</h2>
-<table>
-<tr><th>Jarayon</th><th>AT</th><th>BT</th></tr>
-<tr><td>P1</td><td>0</td><td>14</td></tr>
-<tr><td>P2</td><td>1</td><td>10</td></tr>
-<tr><td>P3</td><td>4</td><td>2</td></tr>
-<tr><td>P4</td><td>9</td><td>6</td></tr>
-<tr><td>P5</td><td>2</td><td>9</td></tr>
-</table>
-<p class="note">CT — tugash vaqti. TAT = CT − AT. WT = TAT − BT. AWT = WT yig‘indisi / jarayonlar soni.</p>
-
-<h2>1. Priority Scheduling (Non-Preemptive)</h2>
-<p>Priority qiymatlari berilmagan. Hisoblashda P1, P2, P3, P4, P5 tartibi priority tartibi deb olindi. Jarayon CPU ni olgach, oxirigacha ishlaydi.</p>
-<div class="gantt">
-<div style="--w:14">P1<br>0–14</div><div style="--w:10">P2<br>14–24</div>
-<div style="--w:2">P3<br>24–26</div><div style="--w:6">P4<br>26–32</div>
-<div style="--w:9">P5<br>32–41</div>
-</div>
-<table>
-<tr><th>Jarayon</th><th>CT</th><th>TAT</th><th>WT</th></tr>
-<tr><td>P1</td><td>14</td><td>14−0=14</td><td>14−14=0</td></tr>
-<tr><td>P2</td><td>24</td><td>24−1=23</td><td>23−10=13</td></tr>
-<tr><td>P3</td><td>26</td><td>26−4=22</td><td>22−2=20</td></tr>
-<tr><td>P4</td><td>32</td><td>32−9=23</td><td>23−6=17</td></tr>
-<tr><td>P5</td><td>41</td><td>41−2=39</td><td>39−9=30</td></tr>
-</table>
-<p>AWT = (0 + 13 + 20 + 17 + 30) / 5 = <b>16</b></p>
-
-<h2>2. Round Robin</h2>
-<p>Quantum Time: TQ = (16 mod 3) + 2 = <b>3</b>. Har bir jarayon 3 birlikgacha ishlaydi. Tugamasa navbat oxiriga qaytadi.</p>
-<p><b>Navbatdagi bajarilish:</b> P1 → P2 → P5 → P1 → P3 → P2 → P4 → P5 → P1 → P2 → P4 → P5 → P1 → P2 → P1</p>
-<div class="gantt">
-<div style="--w:3">P1<br>0–3</div><div style="--w:3">P2<br>3–6</div><div style="--w:3">P5<br>6–9</div>
-<div style="--w:3">P1<br>9–12</div><div style="--w:2">P3<br>12–14</div><div style="--w:3">P2<br>14–17</div>
-<div style="--w:3">P4<br>17–20</div><div style="--w:3">P5<br>20–23</div><div style="--w:3">P1<br>23–26</div>
-<div style="--w:3">P2<br>26–29</div><div style="--w:3">P4<br>29–32</div><div style="--w:3">P5<br>32–35</div>
-<div style="--w:3">P1<br>35–38</div><div style="--w:1">P2<br>38–39</div><div style="--w:2">P1<br>39–41</div>
-</div>
-<table>
-<tr><th>Jarayon</th><th>CT</th><th>TAT</th><th>WT</th></tr>
-<tr><td>P1</td><td>41</td><td>41−0=41</td><td>41−14=27</td></tr>
-<tr><td>P2</td><td>39</td><td>39−1=38</td><td>38−10=28</td></tr>
-<tr><td>P3</td><td>14</td><td>14−4=10</td><td>10−2=8</td></tr>
-<tr><td>P4</td><td>32</td><td>32−9=23</td><td>23−6=17</td></tr>
-<tr><td>P5</td><td>35</td><td>35−2=33</td><td>33−9=24</td></tr>
-</table>
-<p>AWT = (27 + 28 + 8 + 17 + 24) / 5 = <b>20.8</b></p>
-<h2>Xulosa</h2>
-<p>Priority Scheduling AWT = 16<br>Round Robin AWT = 20.8 (TQ = 3)</p>
-</body>
-</html>
+*{box-sizing:border-box}body{margin:0;background:#f3f6fb;color:#172033;font:15px Arial,sans-serif}.wrap{max-width:1050px;margin:28px auto;padding:0 16px}.hero{background:linear-gradient(120deg,#172554,#2563eb);color:white;padding:25px;border-radius:16px;margin-bottom:18px}.hero h1{margin:0 0 7px}.card{background:white;border:1px solid #e3e9f2;border-radius:15px;padding:19px;margin-bottom:17px}.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:17px}h2{font-size:19px;margin:0 0 13px}h3{font-size:16px;margin:18px 0 9px}table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:9px;border-bottom:1px solid #e6ebf2;text-align:center}th{background:#f8fafc}input{width:100%;padding:8px;border:1px solid #cbd5e1;border-radius:7px;text-align:center}.controls{display:flex;gap:10px;align-items:end;flex-wrap:wrap;margin-top:13px}.field{flex:1;min-width:110px}.field label{display:block;font-size:12px;color:#64748b;margin-bottom:5px}button{border:0;border-radius:8px;padding:10px 15px;background:#2563eb;color:white;font-weight:bold;cursor:pointer}button.alt{background:#e8eef8;color:#23324d}.tabs{display:flex;gap:8px;margin-bottom:12px}.tabs button{background:#e8eef8;color:#334155}.tabs button.active{background:#2563eb;color:white}.note{font-size:13px;color:#536178;background:#f8fafc;padding:11px;border-radius:9px;margin-top:12px}.hidden{display:none}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:12px 0}.metric{background:#f8fafc;border:1px solid #e5eaf2;padding:12px;border-radius:10px}.metric small{display:block;color:#64748b}.metric strong{font-size:22px}.gantt{display:flex;gap:3px;overflow-x:auto;padding:8px 0 14px}.block{flex:0 0 auto;min-width:55px;text-align:center;background:#dbeafe;border:1px solid #93c5fd;color:#1e3a8a;padding:9px 5px;border-radius:7px;font-weight:bold}.block span{display:block;font-size:11px;font-weight:normal;margin-top:4px}.idle{background:#f1f5f9;border-color:#cbd5e1;color:#64748b}.small{font-size:12px;color:#64748b}.error{color:#b91c1c;margin-top:9px}@media(max-width:740px){.grid{grid-template-columns:1fr}.metrics{grid-template-columns:1fr 1fr}}
+</style></head><body><div class="wrap">
+<header class="hero"><h1>CPU Scheduling — 16-variant</h1><div>Non-Preemptive Priority va Round Robin algoritmlarini interaktiv hisoblash</div></header>
+<div class="grid"><section class="card"><h2>1. Jarayonlar ma’lumotlari</h2>
+<table id="inputTable"><thead><tr><th>Jarayon</th><th>AT</th><th>BT</th><th>Priority</th></tr></thead><tbody></tbody></table>
+<div class="controls"><div class="field"><label>Variant raqami</label><input id="variant" type="number" value="16" min="1"></div><div class="field"><label>Round Robin TQ</label><input id="quantum" type="number" value="3" min="1"></div></div>
+<div class="note">AT — kelish vaqti; BT — bajarilish vaqti. Priority ustunida kichik son yuqori ustuvorlik hisoblanadi.</div>
+<div class="controls"><button class="alt" onclick="loadDefaults()">Qiymatlarni tiklash</button><button onclick="runAll()">Hisoblash</button></div><div id="error" class="error"></div></section>
+<section class="card"><h2>2. Algoritmni tanlang</h2><div class="tabs"><button id="tabPriority" class="active" onclick="showResult('priority')">Priority</button><button id="tabRR" onclick="showResult('rr')">Round Robin</button></div>
+<div id="priorityPanel"><h3>Non-Preemptive Priority</h3><p>CPU bo‘shaganda kelib ulgurgan jarayonlardan eng yuqori ustuvorlikdagisi tanlanadi. Boshlangan jarayon tugaguncha ishlaydi.</p></div>
+<div id="rrPanel" class="hidden"><h3>Round Robin</h3><p>Har bir jarayon navbat bilan vaqt kvantidan foydalanadi. Kvant tugaganda tugamagan jarayon navbat oxiriga qaytadi.</p></div>
+<div class="note" id="status">Hisoblashga tayyor.</div></section></div>
+<section class="card"><h2 id="resultTitle">Natijalar</h2><div id="result"></div></section></div>
+<script>
+const defaults=[{at:0,bt:14,pr:1},{at:1,bt:10,pr:2},{at:4,bt:2,pr:3},{at:9,bt:6,pr:4},{at:2,bt:9,pr:5}];let active='priority',results={};
+function loadDefaults(){let b=document.querySelector('#inputTable tbody');b.innerHTML='';defaults.forEach((p,i)=>{let tr=document.createElement('tr');tr.innerHTML=`<td>P${i+1}</td><td><input id="at${i}" type="number" min="0" value="${p.at}"></td><td><input id="bt${i}" type="number" min="1" value="${p.bt}"></td><td><input id="pr${i}" type="number" min="1" value="${p.pr}"></td>`;b.appendChild(tr)});document.getElementById('variant').value=16;document.getElementById('quantum').value=3}
+function readData(){let a=[];for(let i=0;i<5;i++){let at=+document.getElementById('at'+i).value,bt=+document.getElementById('bt'+i).value,pr=+document.getElementById('pr'+i).value;if(!Number.isInteger(at)||at<0||!Number.isInteger(bt)||bt<1||!Number.isInteger(pr)||pr<1)throw Error('AT 0 yoki katta, BT va Priority esa musbat butun son bo‘lishi kerak.');a.push({id:'P'+(i+1),at,bt,pr,index:i})}return a}
+function finish(src,segments,ct){let rows=src.map(p=>{let tat=ct[p.id]-p.at;return {...p,ct:ct[p.id],tat,wt:tat-p.bt}});return{segments,rows,avgWT:rows.reduce((s,p)=>s+p.wt,0)/rows.length,avgTAT:rows.reduce((s,p)=>s+p.tat,0)/rows.length}}
+function priority(src){let ps=src.map(p=>({...p})),time=0,ct={},seg=[];while(Object.keys(ct).length<ps.length){let ready=ps.filter(p=>ct[p.id]===undefined&&p.at<=time);if(!ready.length){let n=Math.min(...ps.filter(p=>ct[p.id]===undefined).map(p=>p.at));seg.push({id:'IDLE',start:time,end:n});time=n;continue}ready.sort((a,b)=>a.pr-b.pr||a.at-b.at||a.index-b.index);let p=ready[0],st=time;time+=p.bt;seg.push({id:p.id,start:st,end:time});ct[p.id]=time}return finish(src,seg,ct)}
+function roundRobin(src,tq){let ps=src.map(p=>({...p,rem:p.bt})),q=[],time=0,added=new Set(),seg=[],ct={};function arrivals(){ps.forEach(p=>{if(!added.has(p.id)&&p.at<=time){q.push(p);added.add(p.id)}})}while(Object.keys(ct).length<ps.length){arrivals();if(!q.length){let n=Math.min(...ps.filter(p=>ct[p.id]===undefined).map(p=>p.at));if(n>time)seg.push({id:'IDLE',start:time,end:n});time=n;arrivals()}let p=q.shift(),run=Math.min(tq,p.rem),st=time;time+=run;p.rem-=run;seg.push({id:p.id,start:st,end:time});arrivals();if(p.rem>0)q.push(p);else ct[p.id]=time}return finish(src,seg,ct)}
+function render(r,type){let h=`<div class="metrics"><div class="metric"><small>O‘rtacha WT</small><strong>${r.avgWT.toFixed(2)}</strong></div><div class="metric"><small>O‘rtacha TAT</small><strong>${r.avgTAT.toFixed(2)}</strong></div><div class="metric"><small>Oxirgi tugash vaqti</small><strong>${Math.max(...r.segments.map(x=>x.end))}</strong></div></div><h3>Gantt diagrammasi</h3><div class="gantt">${r.segments.map(s=>`<div class="block ${s.id==='IDLE'?'idle':''}" style="width:${Math.max(55,(s.end-s.start)*34)}px">${s.id}<span>${s.start}–${s.end}</span></div>`).join('')}</div><h3>Hisoblash jadvali</h3><div style="overflow-x:auto"><table><thead><tr><th>Jarayon</th><th>AT</th><th>BT</th><th>Priority</th><th>CT</th><th>TAT</th><th>WT</th></tr></thead><tbody>${r.rows.map(p=>`<tr><td>${p.id}</td><td>${p.at}</td><td>${p.bt}</td><td>${type==='priority'?p.pr:'—'}</td><td>${p.ct}</td><td>${p.tat}</td><td>${p.wt}</td></tr>`).join('')}</tbody></table></div><p class="small">TAT = CT − AT; WT = TAT − BT.</p>`;document.getElementById('result').innerHTML=h;document.getElementById('resultTitle').textContent='Natijalar — '+(type==='priority'?'Non-Preemptive Priority':'Round Robin')}
+function showResult(w){active=w;document.getElementById('priorityPanel').classList.toggle('hidden',w!=='priority');document.getElementById('rrPanel').classList.toggle('hidden',w!=='rr');document.getElementById('tabPriority').classList.toggle('active',w==='priority');document.getElementById('tabRR').classList.toggle('active',w==='rr');if(results[w])render(results[w],w)}
+function runAll(){try{let ps=readData(),v=+document.getElementById('variant').value,tq=+document.getElementById('quantum').value;if(!Number.isInteger(v)||v<1||!Number.isInteger(tq)||tq<1)throw Error('Variant va TQ musbat butun son bo‘lishi kerak.');results.priority=priority(ps);results.rr=roundRobin(ps,tq);document.getElementById('status').textContent=`Hisoblandi. ${v}-variant formulasi bo‘yicha TQ = ${(v%3)+2}; kiritilgan TQ = ${tq}.`;document.getElementById('error').textContent='';render(results[active],active)}catch(e){document.getElementById('error').textContent=e.message}}
+loadDefaults();runAll();
+</script></body></html>
